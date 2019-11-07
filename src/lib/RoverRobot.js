@@ -25,9 +25,9 @@ class RoverRobot {
     this.alive = true;
   }
 
-  parseLocationInput(userInput) {
+  static parseLocationInput(userInput) {
     const parsedInput = userInput.split(' ');
-    if(parsedInput.length != 3) throw('RoverRobot.parseLocationInput() requires a string with two parameters');
+    if(parsedInput.length !== 3) throw('RoverRobot.parseLocationInput() requires a string with two parameters');
 
     return {
       x: parseInt(parsedInput[0], 10),
@@ -37,7 +37,7 @@ class RoverRobot {
   }
 
   loadCommands(userCommands) {
-    if( typeof userCommands !== 'string') throw('loadCommands() requires a string')
+    if( typeof userCommands !== 'string') throw('loadCommands() requires a string');
     this.commandStack = userCommands.split('');
 
   }
@@ -59,7 +59,7 @@ class RoverRobot {
         };
 
         // check hazards
-        if(this.detectHazards(newLocation.x, newLocation.y, this.direction)){
+        if(this.detectHazards(this.location[0], this.location[1], this.direction)){
           return;
         }
 
@@ -104,8 +104,7 @@ class RoverRobot {
   }
 
   detectHazards(x, y, d) {
-    if( this.mapGrid.hazards[`${x} ${y} ${d}`] ) return true;
-    return false;
+    return this.mapGrid.hazards.includes(`${x} ${y} ${d}`);
   }
 
   detectEdge(x, y) {

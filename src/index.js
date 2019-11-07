@@ -1,5 +1,4 @@
 import readline from 'readline';
-import figlet from 'figlet';
 import chalk from 'chalk';
 
 import generateMap from './lib/marsMap';
@@ -12,8 +11,8 @@ const rl = readline.createInterface({
 
 let mapOfMars;
 const createNewLander = () => {
-  rl.question(chalk.green.bold('Please enter landing coordinates and direction for the rover [exit to end]:  '), (landingZone) => {
-    if(landingZone === 'exit') process.exit()
+  rl.question(chalk.green.bold('Please enter landing coordinates and direction for the next rover [exit to end]:  '), (landingZone) => {
+    if(landingZone === 'exit') process.exit();
 
     rl.question(chalk.green.bold('Please enter commands for the Mars rover:  '), (commands) => {
       const rover = new RoverRobot(landingZone, mapOfMars);
@@ -26,7 +25,6 @@ const createNewLander = () => {
     });
   });
 };
-
 
 rl.question(chalk.green.bold('Please enter Mars dimensions (x y) EG: "10 10":  '), (marsDimensions) => {
   mapOfMars = generateMap(marsDimensions);

@@ -36,11 +36,12 @@ describe('Robot Rover tests', () => {
 
     });
 
+    const mapGrid = generateMap(sampleInput);
+
     describe('Rover should change directions', () => {
-        const mapGrid = generateMap(sampleInput);
         const rover = new RoverRobot(roverTestcase[0].location, mapGrid);
 
-        xit('should turn left towards NORTH', () => {
+        it('should turn left towards NORTH', () => {
             expect(rover.direction).toEqual('E');
             rover.loadCommands('L');
             expect(rover.commandStack.length).toBe(1);
@@ -57,7 +58,6 @@ describe('Robot Rover tests', () => {
     });
 
     describe('Rover test case 1', () => {
-        const mapGrid = generateMap(sampleInput);
         const rover = new RoverRobot(roverTestcase[0].location, mapGrid);
 
         it('should load commands into the rover', () => {
@@ -74,7 +74,6 @@ describe('Robot Rover tests', () => {
     });
 
     describe('Rover test case 2', () => {
-        const mapGrid = generateMap(sampleInput);
         const rover = new RoverRobot(roverTestcase[1].location, mapGrid);
 
         it('should load commands into the rover', () => {
@@ -85,13 +84,12 @@ describe('Robot Rover tests', () => {
         });
 
         it('should move the rover and return the correct output', () => {
-           const result = rover.move();
-           expect(result).toEqual(roverTestcase[1].result);
+            const result = rover.move();
+            expect(result).toEqual(roverTestcase[1].result);
         });
     });
 
     describe('Rover test case 3', () => {
-        const mapGrid = generateMap(sampleInput);
         const rover = new RoverRobot(roverTestcase[2].location, mapGrid);
 
         it('should load commands into the rover', () => {
@@ -101,9 +99,9 @@ describe('Robot Rover tests', () => {
             )
         });
 
-        xit('should move the rover and return the correct output', () => {
-           const result = rover.move();
-           expect(result).toEqual(roverTestcase[2].result);
+        it('should move the rover and return the correct output', () => {
+            const result = rover.move();
+            expect(result).toEqual(roverTestcase[2].result);
         });
     });
 

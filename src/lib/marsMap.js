@@ -4,7 +4,7 @@ const generateMap = (userInput) => {
   if(!userInput) throw('userInput must be a string and is required');
   const parsedBounds = userInput.trim().split(' ');
 
-  if(parsedBounds.length != 2) throw('generateMap() requires a string with two parameters');
+  if(parsedBounds.length !== 2) throw('generateMap() requires a string with two parameters');
 
   if(parsedBounds[0] > MAX_SIZE || parsedBounds[1] > MAX_SIZE) throw(`The grid size is larger than the max of ${MAX_SIZE}`);
 
@@ -18,4 +18,3 @@ const generateMap = (userInput) => {
 };
 
 export default generateMap;
-
