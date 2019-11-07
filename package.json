@@ -16,7 +16,7 @@
     "build": "babel src -d dist",
     "start": "npm run build && node dist/index.js",
     "dev": "npm run build && nodemon dist/index.js",
-    "test": "jest src/**/*.spec.js --watch"
+    "test": "jest ./src/**/*.spec.js --watch"
   },
   "repository": {
     "type": "git",

@@ -105,4 +105,49 @@ describe('Robot Rover tests', () => {
         });
     });
 
+    describe('Test compound commands', () => {
+        const testCaseDonut = {
+          location: '1 1 E',
+          commands: 'O',
+          result: '1 1 E'
+        };
+        const testCaseTwoSteps = {
+            location: '1 1 E',
+            commands: '@',
+            result: '2 1 E'
+        };
+        const testCaseDrawU = {
+            location: '1 3 N',
+            commands: 'U',
+            result: '4 3 N'
+        };
+
+        it('should make the rover do a donut on Mars!', () => {
+            const rover = new RoverRobot(testCaseDonut.location, mapGrid);
+            rover.loadCommands(testCaseDonut.commands);
+
+            const result = rover.move();
+            expect(result).toEqual(testCaseDonut.result);
+            expect(rover.actionCounter).toBe(4);
+        });
+
+        it('should make the rover go 2 steps forward, 1 step back and facing the original direction', () => {
+            const rover = new RoverRobot(testCaseTwoSteps.location, mapGrid);
+            rover.loadCommands(testCaseTwoSteps.commands);
+
+            const result = rover.move();
+            expect(result).toEqual(testCaseTwoSteps.result);
+            expect(rover.actionCounter).toBe(7);
+        });
+
+        it('should make the rover draw a U on the surface of mars', () => {
+            const rover = new RoverRobot(testCaseDrawU.location, mapGrid);
+            rover.loadCommands(testCaseDrawU.commands);
+
+            const result = rover.move();
+            expect(result).toEqual(testCaseDrawU.result);
+            expect(rover.actionCounter).toBe(13);
+        });
+    })
+
 });
