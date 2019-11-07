@@ -1,5 +1,32 @@
+import readline from 'readline';
+import figlet from 'figlet';
+import chalk from 'chalk';
+
 import generateMap from './lib/marsMap';
+import RoverRobot from "./lib/RoverRobot";
 
-const mapOfMars = generateMap(10,10);
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+// figlet('Mars Lander Simulator v0 . 1', (err, data) => {
+//
+// });
 
 
+rl.question(chalk.green.bold('Please enter Mars dimensions (x y) EG: "10 10":  '), (marsDimensions) => {
+  const mapOfMars = generateMap(marsDimensions);
+
+  rl.question(chalk.green.bold('Please enter landing coordinates and direction:  '), (landingZone) => {
+
+    rl.question(chalk.green.bold('Please enter commands for the Mars rover:  '), (commands) => {
+      const rover = new RoverRobot(landingZone, mapOfMars);
+      rover.loadCommands(commands);
+
+      const roverResult = rover.move();
+      console.log(chalk.red.bold(roverResult));
+    });
+
+  });
+});
