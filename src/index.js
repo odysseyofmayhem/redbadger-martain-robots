@@ -10,14 +10,10 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-// figlet('Mars Lander Simulator v0 . 1', (err, data) => {
-//
-// });
-
 let mapOfMars;
 const createNewLander = () => {
   rl.question(chalk.green.bold('Please enter landing coordinates and direction for the rover [exit to end]:  '), (landingZone) => {
-    if(landingZone === 'exit') process.exit();
+    if(landingZone === 'exit') process.exit()
 
     rl.question(chalk.green.bold('Please enter commands for the Mars rover:  '), (commands) => {
       const rover = new RoverRobot(landingZone, mapOfMars);
