@@ -60,16 +60,15 @@ describe('Robot Rover tests', () => {
         const mapGrid = generateMap(sampleInput);
         const rover = new RoverRobot(roverTestcase[0].location, mapGrid);
 
-        xit('should load commands into the rover', () => {
+        it('should load commands into the rover', () => {
             rover.loadCommands(roverTestcase[0].commands);
             expect(rover.commandStack.length).toEqual(
               roverTestcase[0].commands.split('').length
             )
         });
 
-        xit('should move the rover and return the correct output', () => {
+        it('should move the rover and return the correct output', () => {
            const result = rover.move();
-           console.log(result)
            expect(result).toEqual(roverTestcase[0].result);
         });
     });
