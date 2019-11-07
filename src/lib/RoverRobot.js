@@ -1,3 +1,19 @@
+const DIRECTIONS = 'NESW';
+const MOVE_OFFSET = {
+  'N':{
+    x: 0, y: 1
+  },
+  'E':{
+    x: 1, y: 0
+  },
+  'S':{
+    x: 0, y: -1
+  },
+  'W':{
+    x: -1, y: 0
+  },
+};
+
 class RoverRobot {
   constructor(userInput, mapGrid){
     const parsedInput = this.parseLocationInput(userInput);
@@ -28,19 +44,72 @@ class RoverRobot {
 
   move() {
 
-    for(let i = 0; i<this.commandStack.length; i++) {
-      console.log('step...')
+    try{
+      this.commandStack.forEach( command => {
+        if(command !== 'F'){
+          this.changeDirection(command);
+          return;
+        }
+
+        const commandOffset = MOVE_OFFSET[this.direction];
+
+        const newLocation = {
+          x: this.location[0] + commandOffset.x,
+          y: this.location[1] + commandOffset.y,
+        };
+
+        // check hazards
+        if(this.detectHazards(newLocation.x, newLocation.y, this.direction)){
+          return;
+        }
+
+        // check bounds
+        if(this.detectEdge(newLocation.x, newLocation.y)) {
+          throw('edge');
+        }
+
+        // Make a move...
+        this.location = [
+          newLocation.x,
+          newLocation.y
+        ]
+      });
     }
 
-    return '1 1 E';
+    catch(e) {
+      const message = `${this.location[0]} ${this.location[1]} ${this.direction}`;
+
+      // add hazard
+      if(!this.mapGrid.hazards[message]) this.mapGrid.hazards.push(message);
+
+      return `${message} LOST`;
+    }
+
+
+
+    return `${this.location[0]} ${this.location[1]} ${this.direction}`;
   }
 
-  detectHazards() {
+  changeDirection(command) {
+    let index = DIRECTIONS.search(this.direction);
 
+    if(command === 'L') {
+      index += 3;
+    }
+    if(command === 'R') {
+      index += 1;
+    }
+
+    this.direction = DIRECTIONS[index % 4];
   }
 
-  detectEdge() {
+  detectHazards(x, y, d) {
+    if( this.mapGrid.hazards[`${x} ${y} ${d}`] ) return true;
+    return false;
+  }
 
+  detectEdge(x, y) {
+    return (x < 0 || y < 0 || x > this.mapGrid.bounds.x || y > this.mapGrid.bounds.y);
   }
 
 }
