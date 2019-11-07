@@ -1,7 +1,7 @@
 const MAX_SIZE = 50;
 
 const generateMap = (userInput) => {
-  if(!userInput) throw('userInput must be a string is required');
+  if(!userInput) throw('userInput must be a string and is required');
   const parsedBounds = userInput.split(' ');
 
   if(parsedBounds.length != 2) throw('generateMap() requires a string with two parameters');

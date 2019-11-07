@@ -6,17 +6,17 @@ const roverTestcase = [
     {
         location: '1 1 E',
         commands: 'RFRFRFRF',
-        expectedOutput: '1 1 E'
+        result: '1 1 E'
     },
     {
         location: '3 2 N',
         commands: 'FRRFLLFFRRFLL',
-        expectedOutput: '3 3 N LOST'
+        result: '3 3 N LOST'
     },
     {
         location: '0 3 W',
         commands: 'LLFFFLFLFL',
-        expectedOutput: '2 3 S'
+        result: '2 3 S'
     }
 ];
 
@@ -30,13 +30,27 @@ describe('Robot Rover tests', () => {
             expect(rover.location).toEqual([10,10]);
             expect(rover.direction).toEqual('N');
             expect(rover.mapGrid).toEqual(mapGrid);
+            expect(rover.commandStack).toEqual([]);
             expect(rover.alive).toEqual(true);
         });
 
     });
 
     describe('Rover test case 1', () => {
+        const mapGrid = generateMap(sampleInput);
+        const rover = new RoverRobot(roverTestcase[0].location, mapGrid);
 
+        it('should load commands into the rover', () => {
+            rover.loadCommands(roverTestcase[0].commands);
+            expect(rover.commandStack.length).toEqual(
+              roverTestcase[0].commands.split('').length
+            )
+        });
+
+        it('should move the rover and return the correct output', () => {
+           const result = rover.move();
+           expect(result).toEqual(roverTestcase[0].result);
+        });
     });
 
 });

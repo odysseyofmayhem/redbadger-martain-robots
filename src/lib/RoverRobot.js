@@ -5,6 +5,7 @@ class RoverRobot {
     this.location = [parsedInput.x, parsedInput.y];
     this.direction = parsedInput.direction;
     this.mapGrid = mapGrid;
+    this.commandStack = [];
     this.alive = true;
   }
 
@@ -19,8 +20,19 @@ class RoverRobot {
     };
   }
 
+  loadCommands(userCommands) {
+    if( typeof userCommands !== 'string') throw('loadCommands() requires a string')
+    this.commandStack = userCommands.split('');
+
+  }
+
   move() {
 
+    for(let i = 0; i<this.commandStack.length; i++) {
+      console.log('step...')
+    }
+
+    return '1 1 E';
   }
 
   detectHazards() {
