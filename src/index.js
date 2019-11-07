@@ -14,11 +14,10 @@ const rl = readline.createInterface({
 //
 // });
 
-
-rl.question(chalk.green.bold('Please enter Mars dimensions (x y) EG: "10 10":  '), (marsDimensions) => {
-  const mapOfMars = generateMap(marsDimensions);
-
-  rl.question(chalk.green.bold('Please enter landing coordinates and direction:  '), (landingZone) => {
+let mapOfMars;
+const createNewLander = () => {
+  rl.question(chalk.green.bold('Please enter landing coordinates and direction for the rover [exit to end]:  '), (landingZone) => {
+    if(landingZone === 'exit') process.exit();
 
     rl.question(chalk.green.bold('Please enter commands for the Mars rover:  '), (commands) => {
       const rover = new RoverRobot(landingZone, mapOfMars);
@@ -26,7 +25,14 @@ rl.question(chalk.green.bold('Please enter Mars dimensions (x y) EG: "10 10":  '
 
       const roverResult = rover.move();
       console.log(chalk.red.bold(roverResult));
-    });
 
+      createNewLander();
+    });
   });
+};
+
+
+rl.question(chalk.green.bold('Please enter Mars dimensions (x y) EG: "10 10":  '), (marsDimensions) => {
+  mapOfMars = generateMap(marsDimensions);
+  createNewLander();
 });
