@@ -25,7 +25,7 @@ class RoverRobot {
     this.alive = true;
   }
 
-  static parseLocationInput(userInput) {
+  parseLocationInput(userInput) {
     const parsedInput = userInput.split(' ');
     if(parsedInput.length !== 3) throw('RoverRobot.parseLocationInput() requires a string with two parameters');
 
