@@ -34,8 +34,8 @@ class RoverRobot {
   }
 
   parseLocationInput(userInput) {
-    const parsedInput = userInput.split(' ');
-    if(parsedInput.length !== 3) throw('RoverRobot.parseLocationInput() requires a string with two parameters');
+    const parsedInput = userInput.toUpperCase().split(' ');
+    if(parsedInput.length !== 3) throw('RoverRobot.parseLocationInput() requires a string with three parameters');
 
     return {
       x: parseInt(parsedInput[0], 10),
