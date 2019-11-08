@@ -14,6 +14,13 @@ const MOVE_OFFSET = {
   },
 };
 
+// Compound instructions, turn one command into many commands
+const COMPOUND_ACTIONS = {
+  'O': 'RRRR',          // Rover doing a very slow donut
+  '@': 'FFRRFLL',       // Two steps forward, one step back
+  'U': 'RRFFFLFFFLFFF'  // Draw a U in the martian sand
+};
+
 class RoverRobot {
   constructor(userInput, mapGrid){
     const parsedInput = this.parseLocationInput(userInput);
@@ -22,6 +29,7 @@ class RoverRobot {
     this.direction = parsedInput.direction;
     this.mapGrid = mapGrid;
     this.commandStack = [];
+    this.actionCounter = 0;
     this.alive = true;
   }
 
@@ -43,36 +51,19 @@ class RoverRobot {
   }
 
   move() {
+    try {
+      this.commandStack.forEach(command => {
+        // Here we could intercept command code, and generate a sequence of
+        // simple instructions that perform a more complex command.
 
-    try{
-      this.commandStack.forEach( command => {
-        if(command !== 'F'){
-          this.changeDirection(command);
-          return;
+        if(COMPOUND_ACTIONS[command] !== undefined) {
+          const compoundCommandStack = COMPOUND_ACTIONS[command].split('');
+          compoundCommandStack.forEach(singleCommand => this.moveAction(singleCommand));
+        }
+        else {
+          this.moveAction(command);
         }
 
-        const commandOffset = MOVE_OFFSET[this.direction];
-
-        const newLocation = {
-          x: this.location[0] + commandOffset.x,
-          y: this.location[1] + commandOffset.y,
-        };
-
-        // check hazards
-        if(this.detectHazards(this.location[0], this.location[1], this.direction)){
-          return;
-        }
-
-        // check bounds
-        if(this.detectEdge(newLocation.x, newLocation.y)) {
-          throw('edge');
-        }
-
-        // Make a move...
-        this.location = [
-          newLocation.x,
-          newLocation.y
-        ]
       });
     }
 
@@ -81,13 +72,45 @@ class RoverRobot {
 
       // add hazard
       if(!this.mapGrid.hazards[message]) this.mapGrid.hazards.push(message);
+      this.alive = false;
 
       return `${message} LOST`;
     }
 
-
-
     return `${this.location[0]} ${this.location[1]} ${this.direction}`;
+  }
+
+  moveAction(command) {
+    this.actionCounter++;
+
+    if(command !== 'F'){
+      this.changeDirection(command);
+      return;
+    }
+
+    const commandOffset = MOVE_OFFSET[this.direction];
+
+    const newLocation = {
+      x: this.location[0] + commandOffset.x,
+      y: this.location[1] + commandOffset.y,
+    };
+
+    // check hazards
+    if(this.detectHazards(this.location[0], this.location[1], this.direction)){
+      return;
+    }
+
+    // check bounds
+    if(this.detectEdge(newLocation.x, newLocation.y)) {
+      throw('edge');
+    }
+
+    // Make a move...
+    this.location = [
+      newLocation.x,
+      newLocation.y
+    ];
+
   }
 
   changeDirection(command) {
