@@ -68,16 +68,14 @@ class RoverRobot {
     }
 
     catch(e) {
-      const message = `${this.location[0]} ${this.location[1]} ${this.direction}`;
-
       // add hazard
-      if(!this.mapGrid.hazards[message]) this.mapGrid.hazards.push(message);
+      if(!this.mapGrid.hazards[this.outputLocation]) this.mapGrid.hazards.push(this.outputLocation);
       this.alive = false;
 
-      return `${message} LOST`;
+      return `${this.outputLocation} LOST`;
     }
 
-    return `${this.location[0]} ${this.location[1]} ${this.direction}`;
+    return this.outputLocation;
   }
 
   moveAction(command) {
@@ -132,6 +130,10 @@ class RoverRobot {
 
   detectEdge(x, y) {
     return (x < 0 || y < 0 || x > this.mapGrid.bounds.x || y > this.mapGrid.bounds.y);
+  }
+
+  get outputLocation() {
+    return `${this.location[0]} ${this.location[1]} ${this.direction}`;
   }
 
 }
