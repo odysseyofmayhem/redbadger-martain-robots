@@ -1,4 +1,4 @@
-const MAX_SIZE = 50;
+import { MAX_MAP_SIZE } from "../constants";
 
 const generateMap = (userInput) => {
   if(!userInput) throw('userInput must be a string and is required');
@@ -6,7 +6,7 @@ const generateMap = (userInput) => {
 
   if(parsedBounds.length !== 2) throw('generateMap() requires a string with two parameters');
 
-  if(parsedBounds[0] > MAX_SIZE || parsedBounds[1] > MAX_SIZE) throw(`The grid size is larger than the max of ${MAX_SIZE}`);
+  if(parsedBounds[0] > MAX_MAP_SIZE || parsedBounds[1] > MAX_MAP_SIZE) throw(`The grid size is larger than the max of ${MAX_MAP_SIZE}`);
 
   return {
     bounds: {

@@ -1,25 +1,4 @@
-const DIRECTIONS = 'NESW';
-const MOVE_OFFSET = {
-  'N':{
-    x: 0, y: 1
-  },
-  'E':{
-    x: 1, y: 0
-  },
-  'S':{
-    x: 0, y: -1
-  },
-  'W':{
-    x: -1, y: 0
-  },
-};
-
-// Compound instructions, turn one command into many commands
-const COMPOUND_ACTIONS = {
-  'O': 'RRRR',          // Rover doing a very slow donut
-  '@': 'FFRRFLL',       // Two steps forward, one step back
-  'U': 'RRFFFLFFFLFFF'  // Draw a U in the martian sand
-};
+import { DIRECTIONS, MOVE_OFFSET, COMPOUND_ACTIONS } from "../constants";
 
 class RoverRobot {
   constructor(userInput, mapGrid){
