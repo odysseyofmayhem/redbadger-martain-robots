@@ -2,7 +2,7 @@ import { DIRECTIONS, MOVE_OFFSET, COMPOUND_ACTIONS } from "../constants";
 
 class RoverRobot {
   constructor(userInput, mapGrid){
-    const parsedInput = this.parseLocationInput(userInput);
+    const parsedInput = RoverRobot.parseLocationInput(userInput);
 
     this.location = [parsedInput.x, parsedInput.y];
     this.direction = parsedInput.direction;
@@ -12,7 +12,7 @@ class RoverRobot {
     this.alive = true;
   }
 
-  parseLocationInput(userInput) {
+  static parseLocationInput(userInput) {
     const parsedInput = userInput.toUpperCase().split(' ');
     if(parsedInput.length !== 3) throw('RoverRobot.parseLocationInput() requires a string with three parameters');
 
