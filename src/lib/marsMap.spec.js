@@ -1,4 +1,5 @@
 import generateMap from './marsMap';
+import { ERROR } from "../constants";
 
 describe('marsMap tests', () => {
 
@@ -28,7 +29,7 @@ describe('marsMap tests', () => {
       }
       catch (e) {
         expect(e)
-          .toBe('generateMap() requires a string with two parameters');
+          .toBe(ERROR.MARS_MAP_BAD_PARAMS);
       }
 
       try {
@@ -36,7 +37,7 @@ describe('marsMap tests', () => {
       }
       catch (e) {
         expect(e)
-          .toBe('generateMap() requires a string with two parameters');
+          .toBe(ERROR.MARS_MAP_BAD_PARAMS);
       }
 
     });
@@ -47,7 +48,7 @@ describe('marsMap tests', () => {
       }
       catch (e) {
         expect(e)
-          .toBe('The grid size is larger than the max of 50');
+          .toBe(ERROR.MARS_MAP_TOO_LARGE);
       }
 
     });

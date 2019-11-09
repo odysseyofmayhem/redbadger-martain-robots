@@ -1,4 +1,4 @@
-import { DIRECTIONS, MOVE_OFFSET, COMPOUND_ACTIONS } from "../constants";
+import {DIRECTIONS, MOVE_OFFSET, COMPOUND_ACTIONS, ERROR} from "../constants";
 
 class RoverRobot {
   constructor(userInput, mapGrid){
@@ -14,7 +14,7 @@ class RoverRobot {
 
   static parseLocationInput(userInput) {
     const parsedInput = userInput.toUpperCase().split(' ');
-    if(parsedInput.length !== 3) throw('RoverRobot.parseLocationInput() requires a string with three parameters');
+    if(parsedInput.length !== 3) throw(ERROR.ROVER_BAD_PARAMS);
 
     return {
       x: parseInt(parsedInput[0], 10),
@@ -24,7 +24,7 @@ class RoverRobot {
   }
 
   loadCommands(userCommands) {
-    if( typeof userCommands !== 'string') throw('loadCommands() requires a string');
+    if( typeof userCommands !== 'string') throw(ERROR.ROVER_BAD_COMMANDS);
     this.commandStack = userCommands.split('');
 
   }
@@ -79,7 +79,7 @@ class RoverRobot {
 
     // check bounds
     if(this.detectEdge(newLocation.x, newLocation.y)) {
-      throw('edge');
+      throw(ERROR.ROVER_DETECT_EDGE);
     }
 
     // Make a move...

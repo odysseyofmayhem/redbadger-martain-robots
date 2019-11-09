@@ -1,5 +1,6 @@
 import RoverRobot from './RoverRobot';
 import generateMap from './marsMap';
+import { ERROR } from "../constants";
 
 const sampleInput = '5 3';
 const roverTestcase = [
@@ -23,9 +24,9 @@ const roverTestcase = [
 describe('Robot Rover tests', () => {
 
     describe('initialisation', () => {
+        const mapGrid = generateMap('10 10');
 
         it('should initialise the RoverRobot', () => {
-            const mapGrid = generateMap('10 10');
             const rover = new RoverRobot('10 10 N', mapGrid);
             expect(rover.location).toEqual([10,10]);
             expect(rover.direction).toEqual('N');
@@ -34,6 +35,26 @@ describe('Robot Rover tests', () => {
             expect(rover.alive).toEqual(true);
         });
 
+        it('should throw an error with bad params', () => {
+            try {
+                new RoverRobot('10 10', mapGrid);
+            }
+            catch(e) {
+                expect(e)
+                  .toBe(ERROR.ROVER_BAD_PARAMS);
+            }
+        });
+
+        it('should throw an error with bad commands', () => {
+            try {
+                const rover = new RoverRobot('10 10 N', mapGrid);
+                rover.loadCommands();
+            }
+            catch(e) {
+                expect(e)
+                  .toBe(ERROR.ROVER_BAD_COMMANDS);
+            }
+        });
     });
 
     const mapGrid = generateMap(sampleInput);

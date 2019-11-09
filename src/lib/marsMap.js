@@ -1,12 +1,12 @@
-import { MAX_MAP_SIZE } from "../constants";
+import { MAX_MAP_SIZE, ERROR } from "../constants";
 
 const generateMap = (userInput) => {
-  if(!userInput) throw('userInput must be a string and is required');
+  if(!userInput) throw(ERROR.MARS_MAP_BAD_INPUT);
   const parsedBounds = userInput.toUpperCase().trim().split(' ');
 
-  if(parsedBounds.length !== 2) throw('generateMap() requires a string with two parameters');
+  if(parsedBounds.length !== 2) throw(ERROR.MARS_MAP_BAD_PARAMS);
 
-  if(parsedBounds[0] > MAX_MAP_SIZE || parsedBounds[1] > MAX_MAP_SIZE) throw(`The grid size is larger than the max of ${MAX_MAP_SIZE}`);
+  if(parsedBounds[0] > MAX_MAP_SIZE || parsedBounds[1] > MAX_MAP_SIZE) throw(ERROR.MARS_MAP_TOO_LARGE);
 
   return {
     bounds: {

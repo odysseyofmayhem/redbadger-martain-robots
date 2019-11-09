@@ -3,6 +3,7 @@ import chalk from 'chalk';
 
 import generateMap from './lib/marsMap';
 import RoverRobot from "./lib/RoverRobot";
+import { PROMPT } from "./constants";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -11,10 +12,10 @@ const rl = readline.createInterface({
 
 let mapOfMars;
 const createNewLander = () => {
-  rl.question(chalk.green.bold('Please enter landing coordinates and direction for the next rover [exit to end]:  '), (landingZone) => {
+  rl.question(chalk.green.bold(PROMPT.LANDER_COORDINATES), (landingZone) => {
     if(landingZone === 'exit') process.exit();
 
-    rl.question(chalk.green.bold('Please enter commands for the Mars rover:  '), (commands) => {
+    rl.question(chalk.green.bold(PROMPT.ROVER_COMMANDS), (commands) => {
       const rover = new RoverRobot(landingZone, mapOfMars);
       rover.loadCommands(commands);
 
@@ -26,7 +27,7 @@ const createNewLander = () => {
   });
 };
 
-rl.question(chalk.green.bold('Please enter Mars dimensions (x y) EG: "10 10":  '), (marsDimensions) => {
+rl.question(chalk.green.bold(PROMPT.MARS_DIMENSIONS), (marsDimensions) => {
   mapOfMars = generateMap(marsDimensions);
   createNewLander();
 });
